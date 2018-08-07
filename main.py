@@ -1,13 +1,9 @@
-from Airtank import Airtank
-from Dice import Dice
-from Player import Player
-from Ruin import Ruin
-from Ui import Ui
+from Game import Game
 
 def main():
 
-    ui = Ui()
-    ui.welcome()
+    game = Game()
+    game.start()
 
 
 
