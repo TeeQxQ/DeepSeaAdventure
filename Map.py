@@ -3,21 +3,36 @@ from Ruin import Ruin
 
 class Map:
 
-    def __init__(self, size)
+    def __init__(self, size=32):
         self.size = size
         self.ruins = []
 
     def generateRuins(self):
-        pass
+        level = 0
+        for points in range(0, int(self.size/2)):
+            if points % 4 == 0:
+                level += 1
+            self.ruins.append([Ruin(level, points)])
+            self.ruins.append([Ruin(level, points)])
 
     def ruinHasTakenAt(self, index):
-        pass
+        if index < self.size*2:
+            if self.ruins[index][0].isBlank():
+                return True
+        return False
 
-    def pickUpRuinFrom(self, index):
-        pass
+    def pickUpRuinsFrom(self, index):
+        if index < self.size*2:
+            ruins = self.ruins[index]
+            self.ruins[index] = [Ruin()]
+            return ruins
 
-    def placeRuinTo(self, index, ruin):
-        pass
+        return Ruin()
+
+    def placeRuinsTo(self, index, ruins):
+        if index < self.size*2:
+            if not self.ruinHasTakenAt(index):
+                self.ruins[index] = ruins
 
     def getSize(self):
         return self.size
