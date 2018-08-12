@@ -9,7 +9,12 @@ class Ui:
 
     @staticmethod
     def askNewPlayerInformation():
-        name = input('What is the name of a new player? ')
+        name = ''
+        while name == '':
+            name = input('Give your player name? ')
+            if name == '':
+                print('Name cannot be empty')
+        print('Welcome {}!'.format(name))
         return name
 
     @staticmethod
