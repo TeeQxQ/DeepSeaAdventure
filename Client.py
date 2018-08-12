@@ -12,8 +12,8 @@ from Ui import Ui
 
 #Constants:
 MSG_SIZE = 1024
-MSG_NOF_PLAYERS = 'MNP'
-MSG_BREAK = 'MBR'
+MSG_NOF_PLAYERS = b'MNP'
+MSG_BREAK = b'MBR'
 
 class DeepSeaAdventureClient():
     
@@ -35,14 +35,11 @@ class DeepSeaAdventureClient():
             return False
     
     def send(self, msg):
-        self.sock.sendAll(msg)
+        self.sock.sendall(msg)
     
-    def recv(self):
-        return self.sock.recv()
     
     def sendAndRecv(self, msg):
         self.send(msg)
-        return self.recv()
     
 
 
@@ -56,6 +53,7 @@ if __name__ == '__main__':
     else:
         address = 'localhost'
     
+    address = '192.168.0.102'
     print('Let\'s connect to the game server..')
     client = DeepSeaAdventureClient(name, address, 1234)
     if not client.connect():
