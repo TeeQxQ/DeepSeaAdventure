@@ -44,7 +44,7 @@ class Game:
         #Create AI players
         AICount = 0
         while AICount < AIPlayers:
-            name = 'DeepSeaBot#{}'.format(AICount)
+            name = 'AI{}'.format(AICount)
             self.addPlayer(name, True)
             AICount += 1
         
@@ -63,14 +63,17 @@ class Game:
         
         #-----ROUNDS-----
         
-        '''
+        
         while self.currentRound < self.maxNofRounds:
             
             self.ui.printRoundInfo(self.currentRound+1)
             
+            
             #Fill the airtank
             self.airtank.fill()
             
+            
+            '''
             while not self.airtank.isEmpty:
                 #1 REDUCE AIR
                 self.airtank.consume(self.players[self.currentPlayer].getNofRuins())
@@ -85,12 +88,14 @@ class Game:
                 
                 #4 SEARCH
             
+            '''
+            
             self.currentRound += 1
         
         #-----GAME CONCLUSION-----
         
         #TODO
-        '''
+        
         
         if useUI:
             self.ui.goodbye()
@@ -118,5 +123,8 @@ class Game:
         return count
                 
     
-
+if __name__ == '__main__':
+    game = Game()
+    #game.start()
+    game.start(True, 2)
 

@@ -31,4 +31,5 @@ class Player:
     
     def setLocation(self, newLocation):
         self.location = newLocation
+        
 

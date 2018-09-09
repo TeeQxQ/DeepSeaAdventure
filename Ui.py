@@ -46,7 +46,7 @@ class Ui:
     
     @staticmethod
     def printRoundInfo(roundNro):
-        print(['-' for i in range(10)])
+        print('---------------')
         print('ROUND NUMBER {}'.format(roundNro))
         print('')
     
@@ -104,9 +104,9 @@ class Ui:
 
     
     @staticmethod
-    def drawMap(currentMap):
+    def drawMap(currentMap, players):
         pen = MapDrawer()
-        pen.drawAll(currentMap)
+        pen.draw(currentMap, players)
     
     @staticmethod
     def drawCurrentState():
@@ -129,7 +129,7 @@ class MapDrawer:
             self.playerLocations.append(player.getLocation())
     
 
-    def drawAll(self):
+    def draw(self):
         
         #array of arrays
         ruins = self.map.getMap()
@@ -171,20 +171,35 @@ class MapDrawer:
                 #draw full line
                 if mapLine %2 == 0:
                     
+                    if len(coordinatesToBeDrawn) < self.piecesPerLine and mapLine %4 != 0:
+                        for _ in range(self.piecesPerLine - len(coordinatesToBeDrawn)):
+                            self.drawNothing()
+                    
                     for coord in coordinatesToBeDrawn:
-                        ruinStack = ruins[coord]
-                        if len(ruinStack) == 1:
-                            if subLine == 1:
-                                self.drawRuin(ruinStack[0])
-                            else:
-                                self.drawEmpty()
-                        elif len(ruinStack) == 2:
-                            if subLine == 2:
-                                self.drawEmpty()
+                        
+                         #if player is in this location
+                        if coord in self.playerLocations:
+                            for player in self.players:
+                                if player.getLocation() == coord:
+                                    if subLine == 1:
+                                        self.drawPlayer(player)
+                                    else:
+                                        self.drawEmpty()
+                        
+                        else:
+                            ruinStack = ruins[coord]
+                            if len(ruinStack) == 1:
+                                if subLine == 1:
+                                    self.drawRuin(ruinStack[0])
+                                else:
+                                    self.drawEmpty()
+                            elif len(ruinStack) == 2:
+                                if subLine == 2:
+                                    self.drawEmpty()
+                                else:
+                                    self.drawRuin(ruinStack(subLine))
                             else:
                                 self.drawRuin(ruinStack(subLine))
-                        else:
-                            self.drawRuin(ruinStack(subLine))
 
                 #draw only one piece    
                 else:
@@ -268,21 +283,25 @@ if __name__ == '__main__':
     testMap.generateRuins()
     testPlayers = []
     
-    '''
+    
     p1 = Player('Alfa')
     p2 = Player('Beta')
     p3 = Player('Gamma')
     
-    p1.setLocation(5)
-    p2.setLocation(2)
+    p1.setLocation(9)
+    p2.setLocation(12)
     p3.setLocation(3)
     
     testPlayers.append(p1)
     testPlayers.append(p2)
     testPlayers.append(p3)
-    '''
+    
+    
+    testMap.pickUpRuinsFrom(5)
+    testMap.pickUpRuinsFrom(0)
+    testMap.pickUpRuinsFrom(25)
     
     pen = MapDrawer(testMap, testPlayers)
-    pen.drawAll()
+    pen.draw()
     
     
