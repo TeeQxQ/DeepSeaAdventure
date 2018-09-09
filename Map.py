@@ -1,4 +1,3 @@
-import random
 from Ruin import Ruin
 
 class Map:
@@ -8,6 +7,7 @@ class Map:
         self.ruins = []
 
     def generateRuins(self):
+        self.ruins = []
         level = 0
         for points in range(0, int(self.size/2)):
             if points % 4 == 0:
@@ -36,3 +36,6 @@ class Map:
 
     def getSize(self):
         return self.size
+    
+    def getMap(self):
+        return self.ruins

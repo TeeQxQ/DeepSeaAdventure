@@ -17,6 +17,18 @@ class DeepSeaAdventureServer():
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.host, self.port))
+        self.clients = []
+    
+    def addClient(self):
+        self.sock.listen(5)
+        print('Server listening for new connection...')
+        client, address = self.sock.accept()
+        print('New client from {}'.format(address))
+        self.clients.append(client)
+        clientThread = ClientThread(threadCounter, client, address, self)
+        clientThread.start()
+        print("New client succesfully added.")
+        
 
     def listen(self):
         threadCounter = 0
@@ -28,7 +40,6 @@ class DeepSeaAdventureServer():
             threadCounter += 1
             clientThread = ClientThread(threadCounter, client, address, self)
             clientThread.start()
-            clientThread.join()
 
 
 #Conctants

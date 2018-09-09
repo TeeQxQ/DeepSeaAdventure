@@ -14,4 +14,7 @@ class Airtank:
         self.airLeft -= amount
         if self.airleft < 0:
             self.airLeft = 0
+    
+    def fill(self):
+        self.airLeft = self.size
 
